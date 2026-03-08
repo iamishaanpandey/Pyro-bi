@@ -18,7 +18,7 @@ Reimagined data onboarding experience designed to make dropping a CSV exciting.
 - **Step 3: Data Preview:** Displays sample records from the sanitized dataset, ready for querying.
 
 ### 2. Conversational Agent Pipeline
-A robust MoE (Mixture of Experts) style pipeline powered by the Gemini 2.5 Flash API:
+A robust MoE (Mixture of Experts) style pipeline powered by the llama-3.3-70b-versatile API:
 1. **Router Agent:** Analyzes the user's intent to classify the query type (Trend, KPI, Distribution, Comparison).
 2. **SQL Generator Agent (Query Executor):** Translates natural language into dialect-specific DuckDB SQL. Enforces strict analytical rules for aggregations, ensuring entity rankings correctly use `GROUP BY` and calculating sophisticated metrics like CAGR (Compound Annual Growth Rate) exactly as a data analyst would.
 3. **Chart Configurator (UI Config):** Examines the output DataFrame and designs an optimal Apache ECharts configuration tailored to the specific data structure.
