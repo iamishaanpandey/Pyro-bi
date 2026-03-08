@@ -1,0 +1,37 @@
+{
+  "tables": [
+    {
+      "name": "sales",
+      "description": "Sales transactions including revenue, units sold, region, and product category",
+      "columns": [
+        {"name": "date", "type": "DATE", "description": "Transaction date (YYYY-MM-DD)"},
+        {"name": "region", "type": "VARCHAR", "description": "Sales region: North, South, East, West"},
+        {"name": "product_category", "type": "VARCHAR", "description": "Product category: Electronics, Clothing, Food, Books"},
+        {"name": "revenue", "type": "FLOAT", "description": "Revenue in USD for the transaction"},
+        {"name": "units_sold", "type": "INTEGER", "description": "Number of units sold in the transaction"},
+        {"name": "customer_id", "type": "INTEGER", "description": "Foreign key to customers table"}
+      ]
+    },
+    {
+      "name": "customers",
+      "description": "Customer master data including location, tier, and signup date",
+      "columns": [
+        {"name": "customer_id", "type": "INTEGER", "description": "Unique customer identifier (primary key)"},
+        {"name": "name", "type": "VARCHAR", "description": "Customer full name"},
+        {"name": "state", "type": "VARCHAR", "description": "US state abbreviation where customer is located"},
+        {"name": "signup_date", "type": "DATE", "description": "Date the customer signed up"},
+        {"name": "tier", "type": "VARCHAR", "description": "Customer loyalty tier: Bronze, Silver, Gold"}
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "from_table": "sales",
+      "from_column": "customer_id",
+      "to_table": "customers",
+      "to_column": "customer_id",
+      "type": "many-to-one",
+      "description": "Each sale belongs to one customer"
+    }
+  ]
+}

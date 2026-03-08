@@ -1,0 +1,846 @@
+[
+  {
+    "id": "d56c5e88-d6a7-4d8a-a3c9-287f5cdd7364",
+    "title": "Ishaan",
+    "timestamp": "2026-03-08T13:08:27.915617",
+    "query": "Average Annual Growth Rate of Claims Intimated No by Life Insurer",
+    "state": {
+      "data": [
+        {
+          "life_insurer": "Edelws",
+          "aagr_pct": 40.64
+        },
+        {
+          "life_insurer": "SUD",
+          "aagr_pct": 34.29
+        },
+        {
+          "life_insurer": "Bharti Axa",
+          "aagr_pct": 30.26
+        },
+        {
+          "life_insurer": "Indiafirst",
+          "aagr_pct": 28.69
+        },
+        {
+          "life_insurer": "Pramerica",
+          "aagr_pct": 28.2
+        },
+        {
+          "life_insurer": "Edelweiss Tokio",
+          "aagr_pct": 27.66
+        },
+        {
+          "life_insurer": "Kotak",
+          "aagr_pct": 27.28
+        },
+        {
+          "life_insurer": "PNB Metlife",
+          "aagr_pct": 27.1
+        },
+        {
+          "life_insurer": "HDFC",
+          "aagr_pct": 26.11
+        },
+        {
+          "life_insurer": "PVT.",
+          "aagr_pct": 24.96
+        },
+        {
+          "life_insurer": "Tata AIA",
+          "aagr_pct": 24.47
+        },
+        {
+          "life_insurer": "ABSL",
+          "aagr_pct": 24.45
+        },
+        {
+          "life_insurer": "Max",
+          "aagr_pct": 24.41
+        },
+        {
+          "life_insurer": "SBI Life",
+          "aagr_pct": 23.95
+        },
+        {
+          "life_insurer": "ICICI",
+          "aagr_pct": 22.93
+        },
+        {
+          "life_insurer": "Canara HSBC OBC",
+          "aagr_pct": 22.73
+        },
+        {
+          "life_insurer": "Can HSBC",
+          "aagr_pct": 21.23
+        },
+        {
+          "life_insurer": "Ageas",
+          "aagr_pct": 21.2
+        },
+        {
+          "life_insurer": "Baj Alz",
+          "aagr_pct": 21.18
+        },
+        {
+          "life_insurer": "Industry",
+          "aagr_pct": 21.09
+        },
+        {
+          "life_insurer": "Reliance",
+          "aagr_pct": 20.75
+        },
+        {
+          "life_insurer": "Exide",
+          "aagr_pct": 19.97
+        },
+        {
+          "life_insurer": "Max Life",
+          "aagr_pct": 18.04
+        },
+        {
+          "life_insurer": "Sahara",
+          "aagr_pct": 17.79
+        },
+        {
+          "life_insurer": "Fut Genli",
+          "aagr_pct": 16.36
+        },
+        {
+          "life_insurer": "Shriram",
+          "aagr_pct": 16.16
+        },
+        {
+          "life_insurer": "Aviva",
+          "aagr_pct": 15.66
+        },
+        {
+          "life_insurer": "Aegon",
+          "aagr_pct": 15.45
+        },
+        {
+          "life_insurer": "India First",
+          "aagr_pct": 13.66
+        },
+        {
+          "life_insurer": "LIC",
+          "aagr_pct": 13.16
+        },
+        {
+          "life_insurer": "Ageas Federal",
+          "aagr_pct": 11.75
+        },
+        {
+          "life_insurer": "Exide Life",
+          "aagr_pct": 10.77
+        },
+        {
+          "life_insurer": "Kotak Mahindra",
+          "aagr_pct": 9.82
+        },
+        {
+          "life_insurer": "Private Total",
+          "aagr_pct": 9.29
+        },
+        {
+          "life_insurer": "ICICI Prudential",
+          "aagr_pct": 8.08
+        },
+        {
+          "life_insurer": "HDFC Life",
+          "aagr_pct": 7.88
+        },
+        {
+          "life_insurer": "Sahara Life",
+          "aagr_pct": 7.77
+        },
+        {
+          "life_insurer": "Star Union",
+          "aagr_pct": 7.5
+        },
+        {
+          "life_insurer": "PNB Met Life",
+          "aagr_pct": 7.49
+        },
+        {
+          "life_insurer": "Industry Total",
+          "aagr_pct": 6.73
+        },
+        {
+          "life_insurer": "Aditya Birla Life",
+          "aagr_pct": 5.87
+        },
+        {
+          "life_insurer": "Bajaj Allianz",
+          "aagr_pct": 4.27
+        },
+        {
+          "life_insurer": "Reliance Nippon",
+          "aagr_pct": 4.11
+        },
+        {
+          "life_insurer": "Pramerica Life",
+          "aagr_pct": 3.34
+        },
+        {
+          "life_insurer": "Future Generali",
+          "aagr_pct": 2.93
+        }
+      ],
+      "echarts_config": {
+        "title": {
+          "text": "Average Annual Growth Rate of Claims Intimated No by Life Insurer",
+          "left": "center"
+        },
+        "tooltip": {
+          "trigger": "axis"
+        },
+        "toolbox": {
+          "feature": {
+            "saveAsImage": {},
+            "magicType": {
+              "type": [
+                "line",
+                "bar"
+              ]
+            }
+          }
+        },
+        "legend": {
+          "bottom": 0
+        },
+        "dataZoom": [
+          {
+            "type": "slider",
+            "bottom": 10
+          }
+        ],
+        "xAxis": {
+          "type": "category"
+        },
+        "yAxis": {
+          "type": "value"
+        },
+        "dataset": {
+          "source": [
+            {
+              "life_insurer": "Edelws",
+              "aagr_pct": 40.64
+            },
+            {
+              "life_insurer": "SUD",
+              "aagr_pct": 34.29
+            },
+            {
+              "life_insurer": "Bharti Axa",
+              "aagr_pct": 30.26
+            },
+            {
+              "life_insurer": "Indiafirst",
+              "aagr_pct": 28.69
+            },
+            {
+              "life_insurer": "Pramerica",
+              "aagr_pct": 28.2
+            },
+            {
+              "life_insurer": "Edelweiss Tokio",
+              "aagr_pct": 27.66
+            },
+            {
+              "life_insurer": "Kotak",
+              "aagr_pct": 27.28
+            },
+            {
+              "life_insurer": "PNB Metlife",
+              "aagr_pct": 27.1
+            },
+            {
+              "life_insurer": "HDFC",
+              "aagr_pct": 26.11
+            },
+            {
+              "life_insurer": "PVT.",
+              "aagr_pct": 24.96
+            },
+            {
+              "life_insurer": "Tata AIA",
+              "aagr_pct": 24.47
+            },
+            {
+              "life_insurer": "ABSL",
+              "aagr_pct": 24.45
+            },
+            {
+              "life_insurer": "Max",
+              "aagr_pct": 24.41
+            },
+            {
+              "life_insurer": "SBI Life",
+              "aagr_pct": 23.95
+            },
+            {
+              "life_insurer": "ICICI",
+              "aagr_pct": 22.93
+            },
+            {
+              "life_insurer": "Canara HSBC OBC",
+              "aagr_pct": 22.73
+            },
+            {
+              "life_insurer": "Can HSBC",
+              "aagr_pct": 21.23
+            },
+            {
+              "life_insurer": "Ageas",
+              "aagr_pct": 21.2
+            },
+            {
+              "life_insurer": "Baj Alz",
+              "aagr_pct": 21.18
+            },
+            {
+              "life_insurer": "Industry",
+              "aagr_pct": 21.09
+            },
+            {
+              "life_insurer": "Reliance",
+              "aagr_pct": 20.75
+            },
+            {
+              "life_insurer": "Exide",
+              "aagr_pct": 19.97
+            },
+            {
+              "life_insurer": "Max Life",
+              "aagr_pct": 18.04
+            },
+            {
+              "life_insurer": "Sahara",
+              "aagr_pct": 17.79
+            },
+            {
+              "life_insurer": "Fut Genli",
+              "aagr_pct": 16.36
+            },
+            {
+              "life_insurer": "Shriram",
+              "aagr_pct": 16.16
+            },
+            {
+              "life_insurer": "Aviva",
+              "aagr_pct": 15.66
+            },
+            {
+              "life_insurer": "Aegon",
+              "aagr_pct": 15.45
+            },
+            {
+              "life_insurer": "India First",
+              "aagr_pct": 13.66
+            },
+            {
+              "life_insurer": "LIC",
+              "aagr_pct": 13.16
+            },
+            {
+              "life_insurer": "Ageas Federal",
+              "aagr_pct": 11.75
+            },
+            {
+              "life_insurer": "Exide Life",
+              "aagr_pct": 10.77
+            },
+            {
+              "life_insurer": "Kotak Mahindra",
+              "aagr_pct": 9.82
+            },
+            {
+              "life_insurer": "Private Total",
+              "aagr_pct": 9.29
+            },
+            {
+              "life_insurer": "ICICI Prudential",
+              "aagr_pct": 8.08
+            },
+            {
+              "life_insurer": "HDFC Life",
+              "aagr_pct": 7.88
+            },
+            {
+              "life_insurer": "Sahara Life",
+              "aagr_pct": 7.77
+            },
+            {
+              "life_insurer": "Star Union",
+              "aagr_pct": 7.5
+            },
+            {
+              "life_insurer": "PNB Met Life",
+              "aagr_pct": 7.49
+            },
+            {
+              "life_insurer": "Industry Total",
+              "aagr_pct": 6.73
+            },
+            {
+              "life_insurer": "Aditya Birla Life",
+              "aagr_pct": 5.87
+            },
+            {
+              "life_insurer": "Bajaj Allianz",
+              "aagr_pct": 4.27
+            },
+            {
+              "life_insurer": "Reliance Nippon",
+              "aagr_pct": 4.11
+            },
+            {
+              "life_insurer": "Pramerica Life",
+              "aagr_pct": 3.34
+            },
+            {
+              "life_insurer": "Future Generali",
+              "aagr_pct": 2.93
+            }
+          ]
+        },
+        "series": [
+          {
+            "type": "bar",
+            "datasetIndex": 0,
+            "encode": {
+              "x": "life_insurer",
+              "y": "aagr_pct"
+            }
+          }
+        ]
+      },
+      "chart_type": "echarts",
+      "insight_summary": "Edelws leads with a 40.64% average annual growth rate, followed by SUD at 34.29%. Bharti Axa and Indiafirst trail at 30.26% and 28.69%, respectively.",
+      "sql_executed": "SELECT \n  life_insurer,\n  ROUND((POWER(CAST(MAX(claims_intimated_no) AS DOUBLE) / NULLIF(MIN(claims_intimated_no), 0), \n              1.0 / NULLIF(COUNT(DISTINCT year), 0)) - 1) * 100, 2) AS aagr_pct\nFROM \n  india_life_insurance_claims\nGROUP BY \n  life_insurer\nORDER BY \n  aagr_pct DESC\nLIMIT 500"
+    }
+  },
+  {
+    "id": "f1b54ac2-1e18-4afb-93e8-1d9b513e7241",
+    "title": "claims",
+    "timestamp": "2026-03-08T13:31:09.998557",
+    "query": "Average Annual Growth Rate of Claims Intimated No by Life Insurer",
+    "state": {
+      "data": [
+        {
+          "life_insurer": "Edelws",
+          "aagr_pct": 40.64
+        },
+        {
+          "life_insurer": "SUD",
+          "aagr_pct": 34.29
+        },
+        {
+          "life_insurer": "Bharti Axa",
+          "aagr_pct": 30.26
+        },
+        {
+          "life_insurer": "Indiafirst",
+          "aagr_pct": 28.69
+        },
+        {
+          "life_insurer": "Pramerica",
+          "aagr_pct": 28.2
+        },
+        {
+          "life_insurer": "Edelweiss Tokio",
+          "aagr_pct": 27.66
+        },
+        {
+          "life_insurer": "Kotak",
+          "aagr_pct": 27.28
+        },
+        {
+          "life_insurer": "PNB Metlife",
+          "aagr_pct": 27.1
+        },
+        {
+          "life_insurer": "HDFC",
+          "aagr_pct": 26.11
+        },
+        {
+          "life_insurer": "PVT.",
+          "aagr_pct": 24.96
+        },
+        {
+          "life_insurer": "Tata AIA",
+          "aagr_pct": 24.47
+        },
+        {
+          "life_insurer": "ABSL",
+          "aagr_pct": 24.45
+        },
+        {
+          "life_insurer": "Max",
+          "aagr_pct": 24.41
+        },
+        {
+          "life_insurer": "SBI Life",
+          "aagr_pct": 23.95
+        },
+        {
+          "life_insurer": "ICICI",
+          "aagr_pct": 22.93
+        },
+        {
+          "life_insurer": "Canara HSBC OBC",
+          "aagr_pct": 22.73
+        },
+        {
+          "life_insurer": "Can HSBC",
+          "aagr_pct": 21.23
+        },
+        {
+          "life_insurer": "Ageas",
+          "aagr_pct": 21.2
+        },
+        {
+          "life_insurer": "Baj Alz",
+          "aagr_pct": 21.18
+        },
+        {
+          "life_insurer": "Industry",
+          "aagr_pct": 21.09
+        },
+        {
+          "life_insurer": "Reliance",
+          "aagr_pct": 20.75
+        },
+        {
+          "life_insurer": "Exide",
+          "aagr_pct": 19.97
+        },
+        {
+          "life_insurer": "Max Life",
+          "aagr_pct": 18.04
+        },
+        {
+          "life_insurer": "Sahara",
+          "aagr_pct": 17.79
+        },
+        {
+          "life_insurer": "Fut Genli",
+          "aagr_pct": 16.36
+        },
+        {
+          "life_insurer": "Shriram",
+          "aagr_pct": 16.16
+        },
+        {
+          "life_insurer": "Aviva",
+          "aagr_pct": 15.66
+        },
+        {
+          "life_insurer": "Aegon",
+          "aagr_pct": 15.45
+        },
+        {
+          "life_insurer": "India First",
+          "aagr_pct": 13.66
+        },
+        {
+          "life_insurer": "LIC",
+          "aagr_pct": 13.16
+        },
+        {
+          "life_insurer": "Ageas Federal",
+          "aagr_pct": 11.75
+        },
+        {
+          "life_insurer": "Exide Life",
+          "aagr_pct": 10.77
+        },
+        {
+          "life_insurer": "Kotak Mahindra",
+          "aagr_pct": 9.82
+        },
+        {
+          "life_insurer": "Private Total",
+          "aagr_pct": 9.29
+        },
+        {
+          "life_insurer": "ICICI Prudential",
+          "aagr_pct": 8.08
+        },
+        {
+          "life_insurer": "HDFC Life",
+          "aagr_pct": 7.88
+        },
+        {
+          "life_insurer": "Sahara Life",
+          "aagr_pct": 7.77
+        },
+        {
+          "life_insurer": "Star Union",
+          "aagr_pct": 7.5
+        },
+        {
+          "life_insurer": "PNB Met Life",
+          "aagr_pct": 7.49
+        },
+        {
+          "life_insurer": "Industry Total",
+          "aagr_pct": 6.73
+        },
+        {
+          "life_insurer": "Aditya Birla Life",
+          "aagr_pct": 5.87
+        },
+        {
+          "life_insurer": "Bajaj Allianz",
+          "aagr_pct": 4.27
+        },
+        {
+          "life_insurer": "Reliance Nippon",
+          "aagr_pct": 4.11
+        },
+        {
+          "life_insurer": "Pramerica Life",
+          "aagr_pct": 3.34
+        },
+        {
+          "life_insurer": "Future Generali",
+          "aagr_pct": 2.93
+        }
+      ],
+      "echarts_config": {
+        "title": {
+          "text": "Average Annual Growth Rate of Claims Intimated No by Life Insurer",
+          "left": "center"
+        },
+        "tooltip": {
+          "trigger": "axis"
+        },
+        "toolbox": {
+          "feature": {
+            "saveAsImage": {},
+            "magicType": {
+              "type": [
+                "line",
+                "bar"
+              ]
+            }
+          }
+        },
+        "legend": {
+          "bottom": 0
+        },
+        "dataZoom": [
+          {
+            "type": "slider",
+            "bottom": 10
+          }
+        ],
+        "xAxis": {
+          "type": "category"
+        },
+        "yAxis": {
+          "type": "value"
+        },
+        "dataset": {
+          "source": [
+            {
+              "life_insurer": "Edelws",
+              "aagr_pct": 40.64
+            },
+            {
+              "life_insurer": "SUD",
+              "aagr_pct": 34.29
+            },
+            {
+              "life_insurer": "Bharti Axa",
+              "aagr_pct": 30.26
+            },
+            {
+              "life_insurer": "Indiafirst",
+              "aagr_pct": 28.69
+            },
+            {
+              "life_insurer": "Pramerica",
+              "aagr_pct": 28.2
+            },
+            {
+              "life_insurer": "Edelweiss Tokio",
+              "aagr_pct": 27.66
+            },
+            {
+              "life_insurer": "Kotak",
+              "aagr_pct": 27.28
+            },
+            {
+              "life_insurer": "PNB Metlife",
+              "aagr_pct": 27.1
+            },
+            {
+              "life_insurer": "HDFC",
+              "aagr_pct": 26.11
+            },
+            {
+              "life_insurer": "PVT.",
+              "aagr_pct": 24.96
+            },
+            {
+              "life_insurer": "Tata AIA",
+              "aagr_pct": 24.47
+            },
+            {
+              "life_insurer": "ABSL",
+              "aagr_pct": 24.45
+            },
+            {
+              "life_insurer": "Max",
+              "aagr_pct": 24.41
+            },
+            {
+              "life_insurer": "SBI Life",
+              "aagr_pct": 23.95
+            },
+            {
+              "life_insurer": "ICICI",
+              "aagr_pct": 22.93
+            },
+            {
+              "life_insurer": "Canara HSBC OBC",
+              "aagr_pct": 22.73
+            },
+            {
+              "life_insurer": "Can HSBC",
+              "aagr_pct": 21.23
+            },
+            {
+              "life_insurer": "Ageas",
+              "aagr_pct": 21.2
+            },
+            {
+              "life_insurer": "Baj Alz",
+              "aagr_pct": 21.18
+            },
+            {
+              "life_insurer": "Industry",
+              "aagr_pct": 21.09
+            },
+            {
+              "life_insurer": "Reliance",
+              "aagr_pct": 20.75
+            },
+            {
+              "life_insurer": "Exide",
+              "aagr_pct": 19.97
+            },
+            {
+              "life_insurer": "Max Life",
+              "aagr_pct": 18.04
+            },
+            {
+              "life_insurer": "Sahara",
+              "aagr_pct": 17.79
+            },
+            {
+              "life_insurer": "Fut Genli",
+              "aagr_pct": 16.36
+            },
+            {
+              "life_insurer": "Shriram",
+              "aagr_pct": 16.16
+            },
+            {
+              "life_insurer": "Aviva",
+              "aagr_pct": 15.66
+            },
+            {
+              "life_insurer": "Aegon",
+              "aagr_pct": 15.45
+            },
+            {
+              "life_insurer": "India First",
+              "aagr_pct": 13.66
+            },
+            {
+              "life_insurer": "LIC",
+              "aagr_pct": 13.16
+            },
+            {
+              "life_insurer": "Ageas Federal",
+              "aagr_pct": 11.75
+            },
+            {
+              "life_insurer": "Exide Life",
+              "aagr_pct": 10.77
+            },
+            {
+              "life_insurer": "Kotak Mahindra",
+              "aagr_pct": 9.82
+            },
+            {
+              "life_insurer": "Private Total",
+              "aagr_pct": 9.29
+            },
+            {
+              "life_insurer": "ICICI Prudential",
+              "aagr_pct": 8.08
+            },
+            {
+              "life_insurer": "HDFC Life",
+              "aagr_pct": 7.88
+            },
+            {
+              "life_insurer": "Sahara Life",
+              "aagr_pct": 7.77
+            },
+            {
+              "life_insurer": "Star Union",
+              "aagr_pct": 7.5
+            },
+            {
+              "life_insurer": "PNB Met Life",
+              "aagr_pct": 7.49
+            },
+            {
+              "life_insurer": "Industry Total",
+              "aagr_pct": 6.73
+            },
+            {
+              "life_insurer": "Aditya Birla Life",
+              "aagr_pct": 5.87
+            },
+            {
+              "life_insurer": "Bajaj Allianz",
+              "aagr_pct": 4.27
+            },
+            {
+              "life_insurer": "Reliance Nippon",
+              "aagr_pct": 4.11
+            },
+            {
+              "life_insurer": "Pramerica Life",
+              "aagr_pct": 3.34
+            },
+            {
+              "life_insurer": "Future Generali",
+              "aagr_pct": 2.93
+            }
+          ]
+        },
+        "series": [
+          {
+            "type": "bar",
+            "datasetIndex": 0,
+            "encode": {
+              "x": "life_insurer",
+              "y": "aagr_pct"
+            }
+          }
+        ]
+      },
+      "chart_type": "echarts",
+      "insight_summary": "Edelws leads with a 40.64% average annual growth rate, followed by SUD at 34.29%. Bharti Axa and Indiafirst trail at 30.26% and 28.69%, respectively.",
+      "sql_executed": "SELECT \n  life_insurer,\n  ROUND((POWER(CAST(MAX(claims_intimated_no) AS DOUBLE) / NULLIF(MIN(claims_intimated_no), 0), \n              1.0 / NULLIF(COUNT(DISTINCT year), 0)) - 1) * 100, 2) AS aagr_pct\nFROM \n  india_life_insurance_claims\nGROUP BY \n  life_insurer\nORDER BY \n  aagr_pct DESC\nLIMIT 500"
+    }
+  }
+]
