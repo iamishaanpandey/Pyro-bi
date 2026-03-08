@@ -20,8 +20,8 @@ _conn: duckdb.DuckDBPyConnection | None = None
 def get_connection() -> duckdb.DuckDBPyConnection:
     global _conn
     if _conn is None:
-        # Use in-memory DB to avoid Windows file-lock issues across restarts.
-        _conn = duckdb.connect(':memory:')
+        # Use file-backed DB to persist data across API requests in stateless cloud environments (Render)
+        _conn = duckdb.connect(DB_PATH)
     return _conn
 
 
@@ -160,8 +160,10 @@ def load_csv_as_table(table_name: str, file_path: str) -> dict:
         df = pd.read_csv(file_path, low_memory=False)
         df = _sanitize_dataframe(df)
 
-        # Drop existing table
-        conn.execute(f'DROP TABLE IF EXISTS "{table_name}"')
+        # Clear previous tables to emulate fresh memory state for this new upload
+        for t in get_table_names():
+            conn.execute(f'DROP TABLE IF EXISTS "{t}"')
+        
         # Register the sanitized DataFrame directly into DuckDB
         conn.execute(f'CREATE TABLE "{table_name}" AS SELECT * FROM df')
     except Exception as e:
