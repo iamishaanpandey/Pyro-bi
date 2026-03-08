@@ -1,5 +1,8 @@
 # PyroBI: Conversational Business Intelligence Platform
 
+[![PyroBI Tech Demo](https://img.youtube.com/vi/fQJ8e8mZ7tI/maxresdefault.jpg)](https://youtu.be/fQJ8e8mZ7tI)
+*Click above to watch the 10-minute technical demonstration video.*
+
 PyroBI is a next-generation, high-performance web application designed to democratize data analytics. Built from the ground up, it allows non-technical users to ask natural-language questions about their datasets and instantly receive production-grade SQL queries, interactive visualizations, and deep AI-driven executive summaries.
 
 The platform embraces a striking **Bauhaus design aesthetic**, prioritizing bold typography, geometric shapes, high-contrast primary colors, and smooth micro-animations to create an engaging and premium analytical experience.
