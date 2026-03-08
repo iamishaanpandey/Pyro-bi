@@ -46,7 +46,7 @@ const useDashboardStore = create((set) => ({
   setSessions: (sessions) => set({ sessions }),
   fetchSessions: async () => {
     try {
-      const res = await axios.get('/sessions')
+      const res = await axios.get((import.meta.env.VITE_API_BASE_URL || '') + '/sessions')
       set({ sessions: res.data.sessions || [] })
     } catch (e) {
       console.error(e)

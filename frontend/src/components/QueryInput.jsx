@@ -45,7 +45,7 @@ export default function QueryInput() {
     setLastQuery(q)  // persist for DetailedAnalysisPanel
     setLoading(true)
     try {
-      const res = await axios.post('/query', { query: q, session_id: activeSessionId || 'default' })
+      const res = await axios.post((import.meta.env.VITE_API_BASE_URL || '') + '/query', { query: q, session_id: activeSessionId || 'default' })
       setQueryResult({ ...res.data, _query: q })
     } catch (err) {
       setError(err.response?.data?.detail || 'Failed to connect to backend.')

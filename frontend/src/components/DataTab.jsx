@@ -60,7 +60,7 @@ function SchemaRow({ col, index, tableName, onUpdated }) {
     if (newType === col.type) return setEditing(false)
     setSaving(true)
     try {
-      const res = await axios.post('/update-column', { table_name: tableName, column_name: col.name, new_type: newType })
+      const res = await axios.post((import.meta.env.VITE_API_BASE_URL || '') + '/update-column', { table_name: tableName, column_name: col.name, new_type: newType })
       onUpdated(res.data) // updates the whole table meta
       setEditing(false)
     } catch (e) {
@@ -141,7 +141,7 @@ export default function DataTab() {
     let meta = null
     
     try {
-      const res = await axios.post('/upload-csv', form)
+      const res = await axios.post((import.meta.env.VITE_API_BASE_URL || '') + '/upload-csv', form)
       meta = {
         tableName: res.data.table_name,
         columns: res.data.column_types
@@ -152,7 +152,7 @@ export default function DataTab() {
       
       setLoadingStep(2)
       try {
-        const previewRes = await axios.get('/preview?limit=50')
+        const previewRes = await axios.get((import.meta.env.VITE_API_BASE_URL || '') + '/preview?limit=50')
         if (previewRes.data?.data?.length > 0) {
           setPreviewData(previewRes.data.data)
         }
@@ -160,7 +160,7 @@ export default function DataTab() {
 
       setLoadingStep(3)
       try {
-        const normRes = await axios.get('/normalization-suggestions')
+        const normRes = await axios.get((import.meta.env.VITE_API_BASE_URL || '') + '/normalization-suggestions')
         if ((normRes.data.auto?.length || 0) + (normRes.data.review?.length || 0) > 0) {
           setNormSuggestions(normRes.data)
         }

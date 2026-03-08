@@ -23,7 +23,7 @@ export default function DetailedAnalysisPanel({ data, userQuery, sql, visible })
     setLoading(true)
     setError(null)
     try {
-      const res = await axios.post('/detailed-analysis', {
+      const res = await axios.post((import.meta.env.VITE_API_BASE_URL || '') + '/detailed-analysis', {
         data: data?.slice(0, 50) || [],
         user_query: userQuery,
         sql: sql || '',

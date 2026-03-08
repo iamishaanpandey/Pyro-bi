@@ -28,7 +28,7 @@ export default function NormalizationPanel({ suggestions, onApplied }) {
       const approved = review.filter((_, i) => decisions[i] === 'approve')
       const mappings  = [...auto, ...approved].map(({ column, from, to }) => ({ column, from, to }))
 
-      const res = await axios.post('/apply-normalization', { mappings })
+      const res = await axios.post((import.meta.env.VITE_API_BASE_URL || '') + '/apply-normalization', { mappings })
       setResult(res.data)
       setDone(true)
       onApplied?.()

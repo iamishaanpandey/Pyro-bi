@@ -12,7 +12,7 @@ export default function Sidebar() {
 
   const loadSession = async (id) => {
     try {
-      const res = await axios.get(`/sessions/${id}`)
+      const res = await axios.get((import.meta.env.VITE_API_BASE_URL || '') + `/sessions/${id}`)
       setQueryResult(res.data.state)
       setActiveSession(id)
       if (window.innerWidth < 768) toggleSidebar() // close on mobile after pick
@@ -23,7 +23,7 @@ export default function Sidebar() {
 
   const deleteSession = async (id) => {
     try {
-      await axios.delete(`/sessions/${id}`)
+      await axios.delete((import.meta.env.VITE_API_BASE_URL || '') + `/sessions/${id}`)
       await fetchSessions()
       setDeleteTarget(null)
     } catch {
