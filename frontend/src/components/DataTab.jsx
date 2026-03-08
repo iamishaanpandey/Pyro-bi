@@ -149,22 +149,18 @@ export default function DataTab() {
           : [],
         rowCount: res.data.row_count
       }
-      
+
       setLoadingStep(2)
-      try {
-        const previewRes = await axios.get((import.meta.env.VITE_API_BASE_URL || '') + '/preview?limit=50')
-        if (previewRes.data?.data?.length > 0) {
-          setPreviewData(previewRes.data.data)
-        }
-      } catch {}
+      // Use preview rows and normalization suggestions bundled in the upload response
+      if (res.data.preview?.length > 0) {
+        setPreviewData(res.data.preview)
+      }
 
       setLoadingStep(3)
-      try {
-        const normRes = await axios.get((import.meta.env.VITE_API_BASE_URL || '') + '/normalization-suggestions')
-        if ((normRes.data.auto?.length || 0) + (normRes.data.review?.length || 0) > 0) {
-          setNormSuggestions(normRes.data)
-        }
-      } catch {}
+      const norm = res.data.normalization_suggestions
+      if (norm && ((norm.auto?.length || 0) + (norm.review?.length || 0) > 0)) {
+        setNormSuggestions(norm)
+      }
 
       setTimeout(() => {
         setTableMeta(meta)

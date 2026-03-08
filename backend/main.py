@@ -167,7 +167,30 @@ async def upload_csv(file: UploadFile = File(...)):
     contents = await file.read()
     try:
         meta = process_upload(contents, file.filename)
-        return meta
+
+        # Compute normalization suggestions and preview immediately
+        # so the frontend gets everything in one round-trip (avoids race condition
+        # with separate GET calls hitting a freshly-initialised DB singleton)
+        from services.duckdb_service import execute_query, get_table_names
+        from services.fuzzy_normalizer import detect_suggestions
+
+        table = meta["table_name"]
+
+        try:
+            norm = detect_suggestions(table)
+        except Exception:
+            norm = {"auto": [], "review": [], "table": table}
+
+        try:
+            preview_rows = execute_query(f'SELECT * FROM "{table}" LIMIT 50')
+        except Exception:
+            preview_rows = []
+
+        return {
+            **meta,
+            "normalization_suggestions": norm,
+            "preview": preview_rows,
+        }
     except Exception as ex:
         raise HTTPException(status_code=500, detail=f"Failed to load CSV: {str(ex)}")
 
