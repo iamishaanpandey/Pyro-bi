@@ -50,7 +50,7 @@ A robust MoE (Mixture of Experts) style pipeline powered by the Gemini 2.5 Flash
 - **Data Engineering:** Pandas (Data cleansing and type coercion)
 - **String Matching:** RapidFuzz (Token-based and WRatio entity normalization)
 - **Caching & Sessions:** Redis
-- **AI/LLM:** Google GenAI SDK (`gemini-2.5-flash`)
+- **AI/LLM:** Groq(llama-3.3-70b-versatile)
 
 ---
 
