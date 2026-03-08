@@ -78,7 +78,7 @@ export default function Dashboard() {
           sql_executed: sqlExecuted,
         }
       }
-      const res = await fetch('/sessions', {
+      const res = await fetch((import.meta.env.VITE_API_BASE_URL || '') + '/sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

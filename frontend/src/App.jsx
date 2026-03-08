@@ -23,7 +23,7 @@ export default function App() {
 
   const executeClearData = async () => {
     try {
-      await fetch('/clear-data', { method: 'POST' })
+      await fetch((import.meta.env.VITE_API_BASE_URL || '') + '/clear-data', { method: 'POST' })
       resetAll()
       setShowClearModal(false)
     } catch {
@@ -37,7 +37,7 @@ export default function App() {
     setActiveTab('query')   // ← switch to Query tab so Dashboard is visible
     setLoading(true)
     try {
-      const res = await fetch('/query', {
+      const res = await fetch((import.meta.env.VITE_API_BASE_URL || '') + '/query', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query, session_id: '' }),
