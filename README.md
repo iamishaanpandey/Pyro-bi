@@ -1,5 +1,7 @@
 # PyroBI: Conversational Business Intelligence Platform
 
+🔗 **Live Web App:** [https://pyro-bi.vercel.app/](https://pyro-bi.vercel.app/)
+
 [![PyroBI Tech Demo](https://img.youtube.com/vi/fQJ8e8mZ7tI/maxresdefault.jpg)](https://youtu.be/fQJ8e8mZ7tI)
 *Click above to watch the 10-minute technical demonstration video.*
 
