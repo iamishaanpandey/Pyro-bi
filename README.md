@@ -80,6 +80,12 @@ The platform embraces a striking **Bauhaus design aesthetic**, prioritizing bold
 - **Feature:** Wired the Detailed Analysis data structure into the PDF loop, allowing the renderer to dynamically print Executive Summaries and Recommendations across automatically generated new pages.
 - **UX Fix:** Pinned the `ReportPanel` Action Bar (Download Button) to the bottom of the scrollable list via CSS `position: sticky`.
 
+### Version 1.8 (Interactive Dashboard & Grid Launch)
+- **UI Architecture:** Migrated from a 2-tab layout to a **3-tab "Command Center"** (Data → Query → Dashboard).
+- **Interactive Grid:** Integrated `react-grid-layout`, enabling users to build custom, persistent dashboard layouts via drag-and-drop.
+- **Contextual Memory:** Enhanced the AI pipeline to support "Dashboard Chat," allowing users to filter or modify multiple dashboard widgets through a single natural language conversation.
+- **Visual Polish:** Added real-time resizing and squish-protection for ECharts within the grid system.
+
 ### Version 1.7 (Cloud Hardening & "Erdis" Launch)
 - **Persistence:** Refactored the architecture to prioritize **Cloud Redis** (Upstash) for session storage, moving away from local-only JSON.
 - **Security:** Implemented anonymous **Browser Fingerprinting** (X-User-ID) to ensure data isolation in multi-user cloud environments.
