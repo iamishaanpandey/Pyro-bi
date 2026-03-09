@@ -28,7 +28,7 @@ def process_upload(file_bytes: bytes, original_filename: str, user_id: str) -> d
     with open(dest_path, "wb") as f:
         f.write(file_bytes)
 
-    meta = load_csv_as_table(table_name, dest_path)
+    meta = load_csv_as_table(table_name, dest_path, user_id)
     return {
         "success": True,
         "table_name": table_name,
