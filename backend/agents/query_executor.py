@@ -36,7 +36,7 @@ Rules:
 1. Return ONLY the raw SQL query — no markdown, no explanation, no backticks.
 2. Use DuckDB-compatible syntax. LIMIT results to 500 rows max.
 3. YEAR / INTEGER COLUMNS: If a column is named 'year', 'yr', 'fiscal_year' or contains 4-digit integers (2019, 2022 etc.) treat it as INTEGER. Filter with plain equality: WHERE year = 2022. NEVER apply strftime(), EXTRACT(), or CAST() to such columns.
-4. DATE COLUMNS: Only use strftime()/EXTRACT() on columns typed DATE/TIMESTAMP/DATETIME. Cast when unsure: CAST(col AS DATE).
+4. DATE COLUMNS: Only use strftime() on columns typed DATE/TIMESTAMP/DATETIME. The correct syntax is strftime(date_column, '%Y-%m'). NEVER swap the arguments! ALWAYS put the column first. Cast when unsure: CAST(col AS DATE).
 5. Always use readable column aliases (e.g., total_revenue, avg_growth, life_insurer).
 6. Round all float results to 2 decimal places with ROUND(..., 2).
 7. AGGREGATION: If asked to rank, list, or compare entities (e.g., insurers), you MUST return EXACTLY ONE ROW PER ENTITY. You MUST use GROUP BY on the entity column, and use aggregate functions like SUM() or AVG() on the metrics. Never return unsummarised individual rows.
