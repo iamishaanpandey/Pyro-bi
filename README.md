@@ -11,17 +11,36 @@ The platform embraces a striking **Bauhaus design aesthetic**, prioritizing bold
 
 ---
 
+## 🎨 Core Features & UX
+
+### 1. Premium Data Connect Wizard
+A high-end, 3-step onboarding flow designed for data quality.
+- **Bauhaus Dropzone:** A striking, animated interface for CSV ingestion.
+- **Interactive Schema Editor:** Real-time DuckDB schema management, allowing users to cast data types (e.g., Integer to Float) before analysis.
+- **Intelligent Normalization:** Fuzzy-logic engine that detects and merges dirty data (e.g., "Met Life" vs "Metlife") using RapidFuzz and custom acronym detection.
+
+### 2. Conversational Agent Pipeline
+A multi-agent Mixture-of-Experts (MoE) pipeline powered by **Groq**:
+- **Router Agent:** Classifies intent (KPI, Trend, Comparison).
+- **SQL Generator:** Writes precise DuckDB-dialect SQL, including complex CAGR and window functions.
+- **Chart Configurator:** Dynamically generates optimal Apache ECharts configurations.
+- **Model Cascade:** Automatically falls back from `llama-3.3-70b` to secondary models if rate limits are hit.
+
 ### 3. Interactive Dashboard Grid
 - **Dynamic Layout:** Built using `react-grid-layout`, allowing users to drag and resize charts into a custom analytical workspace.
 - **Dashboard Chat:** A contextual AI sidebar that remembers the state of the dashboard, allowing for follow-up questions like "Now filter the whole dashboard by sector" across multiple widgets simultaneously.
 
 ### 4. Data Quality & DuckDB Profiling
-- **Zero-LLM Anomaly Detection:** The backend runs native SQL queries to calculate missing/null percentages across all columns. Columns with >20% missing data are automatically flagged and injected into the AI context.
+- **Zero-LLM Anomaly Detection:** Native SQL profiling that identifies missing data, outliers, and data-type mismatches (>20% null flags) to protect analysis integrity.
 
-### 5. Interactive Reporting & Premium PDF Export
-- **Session History:** Every query is automatically saved to a persistent **Cloud Redis** session store, ensuring your work survives server restarts.
-- **Report Builder:** Users can pin dynamic charts and data matrices to a side-panel report deck.
-- **Premium PDF Generation:** Sequential rendering of charts and AI findings into a professional, board-ready output.
+### 5. Multi-User Cloud Security
+- **Tenant Isolation:** Every user is uniquely identified via an anonymous browser fingerprint (X-User-ID), ensuring data is never leaked between sessions.
+- **UUID Namespacing:** DuckDB tables are securely namespaced per-user to prevent collision and data overwrites.
+- **OOM Protection:** Strict 15MB upload limits and query row-capping to ensure server stability on cloud platforms like Render.
+
+### 6. Executive Reporting & Premium PDF Export
+- **Cloud Persistence:** Powered by **Redis**, ensuring your saved sessions and reports survive cloud server restarts.
+- **Styled PDF Engine:** Generates board-ready documents with proportional chart scaling, text-wrapped AI summaries, and multi-page layout logic.
 
 ---
 
