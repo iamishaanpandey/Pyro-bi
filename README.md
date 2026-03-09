@@ -80,23 +80,24 @@ The platform embraces a striking **Bauhaus design aesthetic**, prioritizing bold
 - **Feature:** Wired the Detailed Analysis data structure into the PDF loop, allowing the renderer to dynamically print Executive Summaries and Recommendations across automatically generated new pages.
 - **UX Fix:** Pinned the `ReportPanel` Action Bar (Download Button) to the bottom of the scrollable list via CSS `position: sticky`.
 
+### Version 1.6 (Premium Data Onboarding Launch)
+- **UX Update:** Completely redesigned the initial Data Upload Tab with a premium, animated Bauhaus splash screen.
+- **UX Update:** Replaced static loading with a staggered 3-Step animated state (Uploading → Analyzing → Profiling).
+- **UX Update:** Implemented `SequentialReveal` flows for Schema, Normalization, and Preview blocks.
+- **Feature (Editable Schema):** Added `/update-column` endpoint and frontend selector for dynamic Data Type casting.
+
+### Version 1.7 (Cloud Hardening & "Erdis" Launch)
+- **Deployment:** Successfully deployed to Vercel (Frontend) and Render (Backend).
+- **Persistence:** Refactored architecture to prioritize **Cloud Redis** (Upstash) for session storage.
+- **Security:** Implemented anonymous **Browser Fingerprinting** (X-User-ID) for multi-user isolation.
+- **Stateless Stability:** Resolved Render multi-worker race conditions by bundling normalization logic into the upload request.
+- **Safety:** Enforced a **15MB upload limit** and model-capping to prevent OOM errors.
+
 ### Version 1.8 (Interactive Dashboard & Grid Launch)
 - **UI Architecture:** Migrated from a 2-tab layout to a **3-tab "Command Center"** (Data → Query → Dashboard).
 - **Interactive Grid:** Integrated `react-grid-layout`, enabling users to build custom, persistent dashboard layouts via drag-and-drop.
-- **Contextual Memory:** Enhanced the AI pipeline to support "Dashboard Chat," allowing users to filter or modify multiple dashboard widgets through a single natural language conversation.
+- **Contextual Memory:** Enhanced the AI pipeline to support "Dashboard Chat," allowing for seamless follow-up filters across multiple dashboard widgets.
 - **Visual Polish:** Added real-time resizing and squish-protection for ECharts within the grid system.
-
-### Version 1.7 (Cloud Hardening & "Erdis" Launch)
-- **Persistence:** Refactored the architecture to prioritize **Cloud Redis** (Upstash) for session storage, moving away from local-only JSON.
-- **Security:** Implemented anonymous **Browser Fingerprinting** (X-User-ID) to ensure data isolation in multi-user cloud environments.
-- **Reliability:** Added a **Model Cascade** for Groq APIs, ensuring the app stays functional even if a specific model hits a rate limit or goes offline.
-- **Safety:** Enforced a **15MB upload limit** and row-capping to prevent OOM errors on free-tier cloud servers.
-
-### Version 1.7 (Cloud Deployment & Stateless Architecture)
-- **Deployment:** Successfully deployed the split-stack architecture live to the internet (Frontend on Vercel, Backend on Render).
-- **Architecture Fix (DuckDB Race Condition):** Re-engineered the upload pipeline to compute normalization suggestions and preview data inside the exact same `/upload-csv` API request. This eliminated a critical deployment race-condition where Render's dynamic multi-worker routing would cause subsequent GET requests to hit a different container with an empty database.
-- **Configuration:** Implemented dynamic CORS origins (`allow_origins=["*"]`) and dynamic Vite API routing via `import.meta.env.VITE_API_BASE_URL`.
-- **Dependency Management:** Resolved strict `pip` version resolution conflicts between `groq`, `langchain-groq`, and `rapidfuzz` that were blocking Render container builds.
 
 ---
 
