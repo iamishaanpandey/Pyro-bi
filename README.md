@@ -124,3 +124,12 @@ Deploying a stateful analytical platform to stateless cloud environments (Vercel
    - Render free-tier instances sleep after 15 minutes of inactivity. When they wake up, the RAM is dumped and the local filesystem is wiped. 
    - *Impact:* Uploaded CSVs and saved user sessions (currently stored in `sessions.json`) are automatically cleared between sleeps. This makes the platform excellent for secure, stateless "drop and analyze" sessions, but requires upgrading to AWS S3 / Postgres for permanent multi-day storage.
 
+4. **Multi-User Data Collision (Global State):**
+   - *Challenge:* Because there is no database schema separating users, if User A and User B both uploaded `sales.csv` simultaneously, User B would overwrite User A's table in the global DuckDB engine memory.
+   - *Solution (Anonymous UUID Authentication):* The React frontend generates a unique `pyro_user_id` stored in `localStorage` and strictly attaches it as an `X-User-ID` header on all Axios requests. The backend creates a secure namespace by appending this UUID to DuckDB tables (e.g., `tbl_8chars_4_4_4_12_sales`), entirely hiding User A's data and session history from User B.
+   - *Solution (UI Alias Stripping):* To prevent the ugly 36-character UUID from exposing backend architecture in the frontend UI or polluting the LLM's natural language queries, a secondary middleware layer uses strict Regex to clean and alias the strings before they hit the screen (`India Life Insurance Claims` instead of `tbl_8chars...`).
+
+5. **OOM (Out-of-Memory) Server Crashes:**
+   - *Challenge:* Render Free Tier provides limited RAM. A single massive CSV upload could instantly exhaust the server's memory, crashing the service for all users.
+   - *Solution:* Built a FastApi memory-stream chunker into the `/upload-csv` endpoint that strictly enforces a 15MB file size limit, instantly rejecting oversized payloads with a `413 Error` before the bytes can hit the DuckDB ingestion engine.
+
