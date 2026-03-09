@@ -11,29 +11,17 @@ The platform embraces a striking **Bauhaus design aesthetic**, prioritizing bold
 
 ---
 
-## 🎨 Core Features & UX
+### 3. Interactive Dashboard Grid
+- **Dynamic Layout:** Built using `react-grid-layout`, allowing users to drag and resize charts into a custom analytical workspace.
+- **Dashboard Chat:** A contextual AI sidebar that remembers the state of the dashboard, allowing for follow-up questions like "Now filter the whole dashboard by sector" across multiple widgets simultaneously.
 
-### 1. The Data Connect Wizard (3-Step Animated Flow)
-Reimagined data onboarding experience designed to make dropping a CSV exciting.
-- **Step 1: Schema Overview:** Instantly parses the uploaded CSV using Pandas for sanitization (trimming whitespace, converting blanks to NULL) and loads it blazingly fast into an in-memory DuckDB engine. Users can actively edit the inferred data types using a drop-down menu that triggers real-time `ALTER TABLE` casting in the database.
-- **Step 2: Intelligent Normalization:** Automatically profiles low-cardinality string columns to detect near-duplicate entities (e.g., `PNB Met Life` vs `PNB Metlife`). Uses advanced `WRatio` fuzzy-matching and a custom Acronym Detection engine (`ABSL` → `Aditya Birla Sun Life`) to group dirty data into "Auto-Merge" and "Manual Review" tiers.
-- **Step 3: Data Preview:** Displays sample records from the sanitized dataset, ready for querying.
+### 4. Data Quality & DuckDB Profiling
+- **Zero-LLM Anomaly Detection:** The backend runs native SQL queries to calculate missing/null percentages across all columns. Columns with >20% missing data are automatically flagged and injected into the AI context.
 
-### 2. Conversational Agent Pipeline
-A robust MoE (Mixture of Experts) style pipeline powered by the llama-3.3-70b-versatile API:
-1. **Router Agent:** Analyzes the user's intent to classify the query type (Trend, KPI, Distribution, Comparison).
-2. **SQL Generator Agent (Query Executor):** Translates natural language into dialect-specific DuckDB SQL. Enforces strict analytical rules for aggregations, ensuring entity rankings correctly use `GROUP BY` and calculating sophisticated metrics like CAGR (Compound Annual Growth Rate) exactly as a data analyst would.
-3. **Chart Configurator (UI Config):** Examines the output DataFrame and designs an optimal Apache ECharts configuration tailored to the specific data structure.
-4. **Insight Summarizer:** Produces a concise, 1-2 sentence AI insight to accompany the chart.
-5. **Detailed Analyzer:** Generates an exhaustive report detailing Executive Summaries, Key Findings, Trends, and Recommendations.
-
-### 3. Data Quality & DuckDB Profiling
-- **Zero-LLM Anomaly Detection:** The backend runs native SQL queries to calculate missing/null percentages across all columns. Columns with >20% missing data are automatically flagged as anomalies and injected directly into the detailed analysis report for the user's awareness.
-
-### 4. Interactive Reporting & Premium PDF Export
-- **Session History:** Every query is automatically saved to a persistent Redis session store.
+### 5. Interactive Reporting & Premium PDF Export
+- **Session History:** Every query is automatically saved to a persistent **Cloud Redis** session store, ensuring your work survives server restarts.
 - **Report Builder:** Users can pin dynamic charts and data matrices to a side-panel report deck.
-- **Premium PDF Generation:** Using `jsPDF` and `html2canvas`, the platform generates stunning, styled PDF documents. The engine proportionally scales ECharts snapshots, correctly calculates text wrapping for AI insights, and sequentially renders the entire Detailed Analysis report (spanning multiple pages if necessary) to create a board-ready output.
+- **Premium PDF Generation:** Sequential rendering of charts and AI findings into a professional, board-ready output.
 
 ---
 
@@ -52,7 +40,7 @@ A robust MoE (Mixture of Experts) style pipeline powered by the llama-3.3-70b-ve
 - **Data Engineering:** Pandas (Data cleansing and type coercion)
 - **String Matching:** RapidFuzz (Token-based and WRatio entity normalization)
 - **Caching & Sessions:** Redis
-- **AI/LLM:** Groq(llama-3.3-70b-versatile)
+- **AI/LLM:** Groq (**Model Cascade**: `llama-3.3-70b` → `llama-3.1-70b` → `mixtral-8x7b`)
 
 ---
 
@@ -92,11 +80,11 @@ A robust MoE (Mixture of Experts) style pipeline powered by the llama-3.3-70b-ve
 - **Feature:** Wired the Detailed Analysis data structure into the PDF loop, allowing the renderer to dynamically print Executive Summaries and Recommendations across automatically generated new pages.
 - **UX Fix:** Pinned the `ReportPanel` Action Bar (Download Button) to the bottom of the scrollable list via CSS `position: sticky`.
 
-### Version 1.6 (Premium Data Onboarding Launch)
-- **Major UX Update:** Completely redesigned the initial Data Upload Tab. Replaced the basic dropzone with a premium, animated Bauhaus splash screen.
-- **UX Update:** Replaced the static loading spinner with a staggered 3-Step animated state (Uploading → Analyzing → Profiling).
-- **UX Update:** Implemented `SequentialReveal` flows to slide the Schema, Normalization, and Preview blocks onto the screen with custom delays.
-- **Feature (Editable Schema):** Added a new `/update-column` backend endpoint and a frontend UI selector allowing users to dynamically cast column Data Types (e.g., VARCHAR to INTEGER) directly from the Data Tab before moving to the query screen.
+### Version 1.7 (Cloud Hardening & "Erdis" Launch)
+- **Persistence:** Refactored the architecture to prioritize **Cloud Redis** (Upstash) for session storage, moving away from local-only JSON.
+- **Security:** Implemented anonymous **Browser Fingerprinting** (X-User-ID) to ensure data isolation in multi-user cloud environments.
+- **Reliability:** Added a **Model Cascade** for Groq APIs, ensuring the app stays functional even if a specific model hits a rate limit or goes offline.
+- **Safety:** Enforced a **15MB upload limit** and row-capping to prevent OOM errors on free-tier cloud servers.
 
 ### Version 1.7 (Cloud Deployment & Stateless Architecture)
 - **Deployment:** Successfully deployed the split-stack architecture live to the internet (Frontend on Vercel, Backend on Render).
