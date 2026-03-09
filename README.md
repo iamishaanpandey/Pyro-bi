@@ -94,6 +94,31 @@ The platform embraces a striking **Bauhaus design aesthetic**, prioritizing bold
 
 ---
 
+## 🚀 Quick Start (Local)
+
+1. **Clone & Setup Backend**:
+   ```bash
+   cd backend
+   python -m venv venv
+   source venv/bin/activate  # or venv\Scripts\activate on Windows
+   pip install -r requirements.txt
+   uvicorn main:app --reload --port 8001
+   ```
+
+2. **Setup Frontend**:
+   ```bash
+   cd frontend
+   npm install
+   npm run dev -- --port 5174
+   ```
+
+3. **Docker (One-Click)**:
+   ```bash
+   docker-compose up --build
+   ```
+
+---
+
 ## ☁️ Cloud Deployment Architecture & Challenges
 
 Deploying a stateful analytical platform to stateless cloud environments (Vercel + Render Free Tier) presented several unique physical constraints that required architectural pivots from the local development version:
