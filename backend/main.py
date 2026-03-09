@@ -5,7 +5,7 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from fastapi import FastAPI, UploadFile, File, HTTPException, Header
+from fastapi import FastAPI, UploadFile, File, HTTPException, Header, Request, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pathlib import Path
@@ -30,9 +30,17 @@ app.add_middleware(
 )
 
 # ── Bootstrap DB on startup ───────────────────────────────────────────────────
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    print(f"[Request] {request.method} {request.url.path}")
+    response = await call_next(request)
+    print(f"[Response] Status: {response.status_code}")
+    return response
+
 @app.on_event("startup")
 async def startup_event():
     get_connection()  # Triggers CSV bootstrap
+    print(f"[FastAPI] Server loading from: {__file__}")
     print("[FastAPI] Server ready.")
 
 
@@ -40,6 +48,8 @@ async def startup_event():
 class QueryRequest(BaseModel):
     query: str
     session_id: str = ""
+    last_query: str | None = None
+    last_sql: str | None = None
 
 class SaveSessionRequest(BaseModel):
     title: str = ""
@@ -61,6 +71,29 @@ class UpdateColumnRequest(BaseModel):
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+
+
+@app.get("/debug-llm")
+async def debug_llm():
+    """Diagnostic endpoint to test Groq connectivity from the live server."""
+    from services.llm_client import chat
+    import os
+    key = os.getenv("GROQ_API_KEY", "")
+    try:
+        res = chat("You are a tester.", "Respond with 'SERVER OK'")
+        return {
+            "status": "success",
+            "message": res,
+            "key_prefix": key[:10] + "...",
+            "model_cascade": [m for m in os.getenv("GROQ_MODELS", "").split(",") if m] or "default"
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error_type": type(e).__name__,
+            "message": str(e),
+            "key_prefix": key[:10] + "..."
+        }
 
 
 @app.get("/schema")
@@ -132,7 +165,13 @@ async def query(req: QueryRequest, x_user_id: str | None = Header(None)):
     if not req.query.strip():
         raise HTTPException(status_code=400, detail="Query cannot be empty.")
     try:
-        result = run_pipeline(req.query.strip(), req.session_id, x_user_id)
+        result = run_pipeline(
+            req.query.strip(), 
+            req.session_id, 
+            x_user_id, 
+            req.last_query, 
+            req.last_sql
+        )
         return result
     except Exception as ex:
         error_msg = str(ex)
@@ -267,10 +306,10 @@ async def remove_session(session_id: str, x_user_id: str | None = Header(None)):
 
 
 @app.get("/analysis-suggestions")
-async def get_analysis_suggestions():
+async def get_analysis_suggestions(x_user_id: str | None = Header(None)):
     """Generates schema-aware analysis suggestions using LLM."""
     try:
-        return generate_suggestions()
+        return generate_suggestions(x_user_id)
     except Exception as ex:
         raise HTTPException(status_code=500, detail=str(ex))
 

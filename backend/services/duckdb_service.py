@@ -9,7 +9,7 @@ import pandas as pd
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 _BASE = Path(__file__).parent.parent
 DB_PATH = str(_BASE / "data" / "analytics.db")

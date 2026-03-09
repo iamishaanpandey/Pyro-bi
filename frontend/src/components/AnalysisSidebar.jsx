@@ -38,7 +38,9 @@ export default function AnalysisSidebar({ onQuerySelect, hideHeader = false }) {
   const fetchSuggestions = async () => {
     setLoading(true)
     try {
-      const res = await axios.get((import.meta.env.VITE_API_BASE_URL || '') + '/analysis-suggestions')
+      const res = await axios.get((import.meta.env.VITE_API_BASE_URL || '') + '/analysis-suggestions', {
+        headers: { 'X-User-ID': localStorage.getItem('pyro-uid') || '' }
+      })
       setSuggestions(res.data.suggestions || [])
       if (res.data.suggestions?.length) setOpenCategory(0)
     } catch (e) {

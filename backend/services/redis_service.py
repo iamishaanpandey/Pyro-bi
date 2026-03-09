@@ -8,7 +8,7 @@ import hashlib
 import redis as redis_lib
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
 CACHE_TTL = int(os.getenv("CACHE_TTL_SECONDS", "300"))

@@ -51,6 +51,29 @@ const isMatrixResult = (data) => {
   return false
 }
 
+const AddToDashboardButton = ({ data, echartsConfig, chartType, query, sql }) => {
+  const { addToDashboard } = useDashboardStore()
+  const [added, setAdded] = useState(false)
+  const handleAdd = () => {
+    addToDashboard({ data, echartsConfig, chartType, query, sql })
+    setAdded(true)
+    setTimeout(() => setAdded(false), 2000)
+  }
+  return (
+    <button 
+      onClick={handleAdd} 
+      style={{ 
+        padding: '5px 12px', fontSize: 11, background: 'var(--bauhaus-blue)', color: '#fff', 
+        border: '2px solid var(--bauhaus-black)', boxShadow: '2px 2px 0 var(--bauhaus-black)',
+        fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, cursor: 'pointer',
+        textTransform: 'uppercase', letterSpacing: '0.05em'
+      }}
+    >
+      {added ? '✓ ADDED' : '+ ADD TO DASHBOARD'}
+    </button>
+  )
+}
+
 export default function Dashboard() {
   const {
     chartData, echartsConfig, chartType, insightSummary, detailedAnalysis, sqlExecuted,
@@ -203,6 +226,14 @@ export default function Dashboard() {
               )}
             </div>
           )}
+
+          <AddToDashboardButton 
+            data={chartData} 
+            echartsConfig={echartsConfig} 
+            chartType={showKpi ? 'kpi' : showMatrix && matrixViewMode === 'matrix' ? 'matrix' : chartType} 
+            query={lastQuery} 
+            sql={sqlExecuted} 
+          />
 
           {/* Save to Report — passes chartRef + matrixRef for screenshot */}
           <SaveToReportButton

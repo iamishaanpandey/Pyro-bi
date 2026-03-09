@@ -4,6 +4,7 @@ import useDashboardStore from './store/dashboardStore'
 import QueryInput from './components/QueryInput'
 import Dashboard from './components/Dashboard'
 import DataTab from './components/DataTab'
+import DashboardTab from './components/DashboardTab'
 import Sidebar from './components/Sidebar'
 import RightSidebar from './components/RightSidebar'
 
@@ -130,12 +131,28 @@ export default function App() {
               letterSpacing: '0.08em', textTransform: 'uppercase',
               background: activeTab === 'query' ? 'var(--bauhaus-blue)' : 'transparent',
               color: activeTab === 'query' ? '#fff' : 'rgba(13,13,13,0.3)',
-              border: 'none',
+              borderRight: 'var(--bauhaus-border)', borderBottom: 'none', borderTop: 'none', borderLeft: 'none',
               cursor: tableMeta ? 'pointer' : 'not-allowed', transition: 'background 0.2s',
             }}
             title={!tableMeta ? 'Upload data first' : ''}
           >
             2. QUERY (Chat)
+          </button>
+          <button
+            onClick={() => tableMeta && setActiveTab('dashboard')}
+            disabled={!tableMeta}
+            style={{
+              flex: 1, padding: '16px 0',
+              fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14,
+              letterSpacing: '0.08em', textTransform: 'uppercase',
+              background: activeTab === 'dashboard' ? 'var(--bauhaus-yellow)' : 'transparent',
+              color: activeTab === 'dashboard' ? 'var(--bauhaus-black)' : 'rgba(13,13,13,0.3)',
+              border: 'none',
+              cursor: tableMeta ? 'pointer' : 'not-allowed', transition: 'background 0.2s',
+            }}
+            title={!tableMeta ? 'Upload data first' : ''}
+          >
+            3. DASHBOARD
           </button>
         </div>
 
@@ -144,6 +161,10 @@ export default function App() {
           {activeTab === 'data' ? (
             <div style={{ flex: 1, overflowY: 'auto' }}>
               <DataTab />
+            </div>
+          ) : activeTab === 'dashboard' ? (
+            <div style={{ flex: 1, overflowY: 'auto' }}>
+              <DashboardTab />
             </div>
           ) : (
             <>

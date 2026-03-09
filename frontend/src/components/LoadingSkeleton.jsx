@@ -54,7 +54,7 @@ export default function LoadingSkeleton() {
         <div style={{ width: 8, background: 'var(--bauhaus-blue)', opacity: 0.3 }} />
         <div style={{ flex: 1, padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div className="skeleton" style={{ width: 32, height: 32, borderRadius: '50%', borderRadius: 0 }} />
+            <div className="skeleton" style={{ width: 32, height: 32, borderRadius: 0 }} />
             <div className="skeleton" style={{ height: 12, width: 80, borderRadius: 0 }} />
           </div>
           {[100, 80, 60].map((w, i) => (

@@ -18,38 +18,42 @@ def generate_suggestions(user_id: str = None) -> dict:
     """
     Returns a JSON object with grouped analysis suggestion categories.
     """
-    schema_context = build_schema_context(user_id)
-    
-    user = f"""{schema_context}
+    try:
+        schema_context = build_schema_context(user_id)
+        if not schema_context or "No table loaded" in schema_context:
+            print(f"[Suggester] No schema context for user: {user_id}")
+            return {"suggestions": []}
+
+        user = f"""{schema_context}
 
 Based on this schema, generate 4 groups of 3 analysis suggestions each.
-Each group has a 'category' label and a 'description' and a list of 3 'queries' (natural English questions).
-Make the queries highly specific to the actual column names and table names in the schema.
-Make them feel like real analyst questions.
+Each group has a 'category' label, a 'description', an 'icon' (bar, trend, search, or list), and 3 'queries'.
+IMPORTANT: The 'queries' must be natural language questions (plain English) that a business user would ask. 
+DO NOT RETURN SQL. Use the column names only to make the questions accurate.
 
-Return ONLY this exact JSON structure:
+Return ONLY raw JSON in this format:
 [
   {{
-    "category": "Performance Benchmarking",
-    "description": "Compare and rank entities by KPIs",
+    "category": "Performance",
+    "description": "...",
     "icon": "bar",
-    "queries": [
-      "Rank all ...",
-      "Which ... had the highest ...",
-      "Compare ... between ..."
-    ]
-  }},
-  ...
+    "queries": ["What is the total...", "Which entity had...", "Compare..."]
+  }}
 ]
 """
-    try:
         text = chat(SYSTEM, user)
-        # Strip markdown fences
-        if text.startswith("```"):
+        
+        # Robust JSON extraction
+        if "```" in text:
+            # Extract content from the first code block (regardless of header)
             text = text.split("```")[1]
-            if text.startswith("json"):
+            if text.lower().startswith("json"):
                 text = text[4:]
-        return {"suggestions": json.loads(text.strip())}
+        
+        parsed = json.loads(text.strip())
+        print(f"[Suggester] Successfully generated {len(parsed)} groups.")
+        return {"suggestions": parsed}
+
     except Exception as ex:
         print(f"[Suggester] Error: {ex}")
         return {"suggestions": []}

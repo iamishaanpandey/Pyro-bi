@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from services.llm_client import chat
 from services.duckdb_service import execute_query
 
-load_dotenv()
+load_dotenv(override=True)
 MAX_RETRIES = int(os.getenv("MAX_RETRIES", "3"))
 
 SQL_SYSTEM = (

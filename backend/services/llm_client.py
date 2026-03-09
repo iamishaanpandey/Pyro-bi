@@ -15,7 +15,7 @@ import logging
 from groq import Groq, RateLimitError
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +26,11 @@ GROQ_MODEL_CASCADE: list[str] = (
     [m.strip() for m in _env_models.split(",") if m.strip()]
     if _env_models
     else [
-        "llama-3.3-70b-versatile",  # single best model — no fallbacks
+        "llama-3.3-70b-versatile",
+        "llama-3.1-70b-versatile",
+        "llama-3.1-8b-instant",
+        "mixtral-8x7b-32768",
+        "gemma2-9b-it",
     ]
 )
 
@@ -44,14 +48,13 @@ def chat(system: str, user: str, temperature: float = 0.0) -> str:
     """
     Sends a request to Groq using the first available model.
     On RateLimitError (429) cascades through GROQ_MODEL_CASCADE.
-    Raises the last exception if all models are exhausted.
     """
     client = _get_client()
     last_error = None
 
     for model in GROQ_MODEL_CASCADE:
         try:
-            logger.info(f"[LLM] Trying model: {model}")
+            print(f"[LLM] Trying model: {model}")
             response = client.chat.completions.create(
                 model=model,
                 temperature=temperature,
@@ -62,20 +65,18 @@ def chat(system: str, user: str, temperature: float = 0.0) -> str:
             )
             content = response.choices[0].message.content.strip()
             if model != GROQ_MODEL_CASCADE[0]:
-                logger.warning(f"[LLM] Fell back to model: {model}")
+                print(f"[LLM] SUCCESS after fallback to {model}")
             return content
 
         except RateLimitError as e:
-            logger.warning(f"[LLM] Rate limit on {model}: {e}. Trying next model...")
+            print(f"[LLM] Rate limit on {model}. Trying next in cascade...")
             last_error = e
-            time.sleep(0.3)   # tiny pause before trying next model
+            time.sleep(0.5) 
             continue
 
         except Exception as e:
-            # Non-rate-limit errors (auth, bad request, etc.) — don't cascade
-            logger.error(f"[LLM] Hard error on {model}: {e}")
+            print(f"[LLM] CRITICAL ERROR on {model}: {e}")
             raise
 
-    # All models exhausted
-    logger.error(f"[LLM] All models rate-limited. Last error: {last_error}")
+    print(f"[LLM] FAILED - All models exhausted. Last error: {last_error}")
     raise last_error

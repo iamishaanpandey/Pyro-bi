@@ -12,11 +12,11 @@ SQL_SYSTEM = (
 )
 
 
-def generate_and_execute(user_query: str, schema_context: str) -> dict:
+def generate_and_execute(user_query: str, schema_context: str, last_query: str = None, last_sql: str = None) -> dict:
     """
     Returns: {"sql": str, "data": list[dict], "error": str | None}
     """
-    sql = _generate_sql(user_query, schema_context)
+    sql = _generate_sql(user_query, schema_context, last_query, last_sql)
     try:
         data = execute_query(sql)
         if not data:
@@ -26,7 +26,7 @@ def generate_and_execute(user_query: str, schema_context: str) -> dict:
         return {"sql": sql, "data": [], "error": str(ex)}
 
 
-def _generate_sql(user_query: str, schema_context: str) -> str:
+def _generate_sql(user_query: str, schema_context: str, last_query: str = None, last_sql: str = None) -> str:
     user = f"""{schema_context}
 
 === TASK ===
@@ -51,7 +51,23 @@ Rules:
     - Do NOT use LAG(), window functions, or per-row subtraction for growth rate questions.
 11. RANKING & METRICS: For ranking pre-calculated ratios across years, use AVG(ratio_column). Use ORDER BY metric DESC LIMIT N for top-N.
 12. RATIO / SHARE: If computing from raw counts: ROUND(SUM(part_col) * 1.0 / NULLIF(SUM(total_col), 0) * 100, 2) — always guard against divide-by-zero.
+"""
 
+    if last_query and last_sql:
+        user += f"""
+=== CONTEXT (FOLLOW-UP QUERY) ===
+The user previously asked: "{last_query}"
+You generated this SQL for them:
+{last_sql}
+
+The user is now asking a follow-up question. Modify the previous SQL to satisfy the new requirement.
+CRITICAL FOLLOW-UP RULES:
+1. If the user asks to filter by a value (e.g., "only M", "filter to East Coast"), identify the correct column from the schema and deeply inject a WHERE clause (before GROUP BY) or a HAVING clause (if filtering on an aggregate).
+2. Use ILIKE '%value%' if you are not 100% sure of the exact case/spacing (e.g. ILIKE '%M%'), or equality if it is an exact code.
+3. DO NOT change the SELECT list, aliases, or the core table names from the previous SQL to ensure the visual chart remains intact, UNLESS the user explicitly asks to change the metric or breakdown.
+"""
+
+    user += f"""
 User question: {user_query}
 
 SQL:"""

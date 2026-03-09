@@ -33,22 +33,19 @@ First 5 sample rows (for type/shape reference only):
 {json.dumps(sample_rows, default=str)}
 
 Instructions:
-1. Choose the *absolute best* ECharts visualization type for this specific data structure (e.g. bar, line, pie, scatter, radar, funnel, heatmap).
+1. Choose the *absolute best* ECharts visualization type for this specific data structure (e.g. bar, line, pie, scatter, radar, heatmap).
 2. DO NOT include 'data' arrays in xAxis or series. Instead, configure the series to use the dataset via the 'encode' property.
 3. DO NOT set hardcoded itemStyle colors. The frontend will inject a global Bauhaus color palette dynamically.
-4. Include a title, tooltip, and legend.
+4. You MUST include a professional 'legend' (e.g., bottom: 0), clean axes, and standard 'tooltip'.
 5. If the data has many rows but isn't aggregated properly, group/aggregate the series logically.
-6. Add the 'toolbox' component with saveAsImage and magicType options. DO NOT include dataView.
-7. To provide SLICERS and FILTERS, explicitly configure 'dataZoom' (type: 'slider') on the x-axis, and if appropriate, a 'visualMap' for filtering values.
-8. Return ONLY the JSON object that corresponds to the ECharts 'option' property. No markdown, no "```json".
+6. DO NOT use 'toolbox', 'dataZoom', 'visualMap', or slicers. Keep the visual extremely clean and professional.
+7. Return ONLY the JSON object that corresponds to the ECharts 'option' property. No markdown, no "```json".
 
 Example structure for a bar chart using dataset:
 {{
-  "title": {{ "text": "Sales by Region", "left": "center" }},
+  "title": {{ "text": "Sales by Region", "left": "center", "textStyle": {{"fontFamily": "'Space Grotesk', sans-serif"}} }},
   "tooltip": {{ "trigger": "axis" }},
-  "toolbox": {{ "feature": {{ "saveAsImage": {{}}, "magicType": {{"type": ["line", "bar"]}} }} }},
-  "legend": {{ "bottom": 0 }},
-  "dataZoom": [{{ "type": "slider", "bottom": 10 }}],
+  "legend": {{ "bottom": 0, "textStyle": {{"fontFamily": "'Space Grotesk', sans-serif"}} }},
   "xAxis": {{ "type": "category" }},
   "yAxis": {{ "type": "value" }},
   "series": [
