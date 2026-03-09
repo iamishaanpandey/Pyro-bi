@@ -96,3 +96,29 @@ A robust MoE (Mixture of Experts) style pipeline powered by the llama-3.3-70b-ve
 - **UX Update:** Implemented `SequentialReveal` flows to slide the Schema, Normalization, and Preview blocks onto the screen with custom delays.
 - **Feature (Editable Schema):** Added a new `/update-column` backend endpoint and a frontend UI selector allowing users to dynamically cast column Data Types (e.g., VARCHAR to INTEGER) directly from the Data Tab before moving to the query screen.
 
+### Version 1.7 (Cloud Deployment & Stateless Architecture)
+- **Deployment:** Successfully deployed the split-stack architecture live to the internet (Frontend on Vercel, Backend on Render).
+- **Architecture Fix (DuckDB Race Condition):** Re-engineered the upload pipeline to compute normalization suggestions and preview data inside the exact same `/upload-csv` API request. This eliminated a critical deployment race-condition where Render's dynamic multi-worker routing would cause subsequent GET requests to hit a different container with an empty database.
+- **Configuration:** Implemented dynamic CORS origins (`allow_origins=["*"]`) and dynamic Vite API routing via `import.meta.env.VITE_API_BASE_URL`.
+- **Dependency Management:** Resolved strict `pip` version resolution conflicts between `groq`, `langchain-groq`, and `rapidfuzz` that were blocking Render container builds.
+
+---
+
+## ☁️ Cloud Deployment Architecture & Challenges
+
+Deploying a stateful analytical platform to stateless cloud environments (Vercel + Render Free Tier) presented several unique physical constraints that required architectural pivots from the local development version:
+
+1. **The Multi-Worker "Amnesia" Bug (Race Conditions):** 
+   - *Local:* The frontend made sequential API calls (`Upload` → `Get Preview` → `Get Normalizations`). It worked perfectly because local `uvicorn` runs 1 worker process that shares memory perfectly.
+   - *Cloud:* Render dynamically routes requests. The `Upload` POST went to Worker A, which loaded the CSV into its memory. The immediate `Get Normalizations` GET request was routed to Worker B, which had empty memory and returned zero results.
+   - *Solution:* Bundled the normalization and preview computations directly into the `POST /upload-csv` response, completely eliminating the race condition.
+
+2. **Strict Dependency Resolution on Blank Slates:**
+   - *Local:* Packages installed iteratively over days work fine.
+   - *Cloud:* Render builds a pristine OS container on every deploy and strictly follows `requirements.txt`. A strict version pin conflict (`langchain-groq` vs `groq==1.0.0`) combined with a missing `rapidfuzz` entry caused complete 500 build failures.
+   - *Solution:* Relaxed version constraints to allow `pip` to resolve the dependency graph dynamically during the Render build phase.
+
+3. **Ephemeral Memory & Filesystems:**
+   - Render free-tier instances sleep after 15 minutes of inactivity. When they wake up, the RAM is dumped and the local filesystem is wiped. 
+   - *Impact:* Uploaded CSVs and saved user sessions (currently stored in `sessions.json`) are automatically cleared between sleeps. This makes the platform excellent for secure, stateless "drop and analyze" sessions, but requires upgrading to AWS S3 / Postgres for permanent multi-day storage.
+
