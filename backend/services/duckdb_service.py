@@ -20,8 +20,8 @@ _conn: duckdb.DuckDBPyConnection | None = None
 def get_connection() -> duckdb.DuckDBPyConnection:
     global _conn
     if _conn is None:
-        # Use file-backed DB to persist data across API requests in stateless cloud environments (Render)
-        _conn = duckdb.connect(DB_PATH)
+        # Use in-memory DB — normalization bundled in upload response avoids any race condition
+        _conn = duckdb.connect(':memory:')
     return _conn
 
 
