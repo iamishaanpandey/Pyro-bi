@@ -2,8 +2,24 @@
 
 🔗 **Live Web App:** [https://pyro-bi.vercel.app/](https://pyro-bi.vercel.app/)
 
-[![PyroBI Tech Demo](https://img.youtube.com/vi/fQJ8e8mZ7tI/maxresdefault.jpg)](https://youtu.be/fQJ8e8mZ7tI)
-*Click above to watch the 10-minute technical demonstration video.*
+<table>
+  <tr>
+    <td align="center">
+      <b>Part 1: The NLP Pipeline & Report Export</b><br><br>
+      <a href="https://youtu.be/fQJ8e8mZ7tI">
+        <img src="https://img.youtube.com/vi/fQJ8e8mZ7tI/maxresdefault.jpg" alt="PyroBI Tech Demo Part 1" width="100%">
+      </a>
+    </td>
+    <td align="center">
+      <b>Part 2: The Command Center & Advanced Architecture</b><br><br>
+      <a href="https://youtu.be/qrlZ0aSqc3I">
+        <img src="https://img.youtube.com/vi/qrlZ0aSqc3I/maxresdefault.jpg" alt="PyroBI Tech Demo Part 2" width="100%">
+      </a>
+    </td>
+  </tr>
+</table>
+
+*Click the thumbnails above to watch the technical demonstration videos.*
 
 PyroBI is a next-generation, high-performance web application designed to democratize data analytics. Built from the ground up, it allows non-technical users to ask natural-language questions about their datasets and instantly receive production-grade SQL queries, interactive visualizations, and deep AI-driven executive summaries.
 
