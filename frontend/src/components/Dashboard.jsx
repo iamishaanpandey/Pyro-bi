@@ -78,12 +78,8 @@ export default function Dashboard() {
           sql_executed: sqlExecuted,
         }
       }
-      const res = await fetch((import.meta.env.VITE_API_BASE_URL || '') + '/sessions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
-      if (res.ok) {
+      const res = await axios.post((import.meta.env.VITE_API_BASE_URL || '') + '/sessions', payload)
+      if (res.status === 200 || res.status === 201) {
         await fetchSessions()
         setSaving(false)
         setSessionTitle('')
