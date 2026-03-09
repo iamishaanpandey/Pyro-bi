@@ -19,36 +19,39 @@ def _load_db() -> list[dict]:
         return []
 
 def _save_db(data: list[dict]) -> None:
+    # Prune to max 100 global sessions to ensure the free-tier hard drive never fills up
+    if len(data) > 100:
+        data = data[-100:]
     os.makedirs(os.path.dirname(SESSIONS_FILE), exist_ok=True)
     with open(SESSIONS_FILE, "w") as f:
         json.dump(data, f, indent=2)
 
-def list_sessions() -> list[dict]:
-    """Return all sessions sorted by newest first (summary only)."""
+def list_sessions(user_id: str) -> list[dict]:
+    """Return all sessions for a specific user, sorted by newest first (summary only)."""
     db = _load_db()
     # Strip heavy data for list view
     summaries = []
     for s in db:
-        summaries.append({
-            "id": s["id"],
-            "title": s["title"],
-            "timestamp": s["timestamp"]
-        })
+        if s.get("user_id") == user_id:
+            summaries.append({
+                "id": s["id"],
+                "title": s["title"],
+                "timestamp": s["timestamp"]
+            })
     return sorted(summaries, key=lambda x: x["timestamp"], reverse=True)
 
-def get_session(session_id: str) -> dict | None:
+def get_session(session_id: str, user_id: str) -> dict | None:
     db = _load_db()
     for s in db:
-        if s["id"] == session_id:
+        if s["id"] == session_id and s.get("user_id") == user_id:
             return s
     return None
 
-def save_session(title: str, query: str, state: dict) -> dict:
+def save_session(title: str, query: str, state: dict, user_id: str) -> dict:
     db = _load_db()
-    # Check if we should update an existing session based on title/query or just create new
-    # For now, treat every save as a new snapshot
     session = {
         "id": str(uuid.uuid4()),
+        "user_id": user_id,
         "title": title or ("Query: " + query[:30] + "..."),
         "timestamp": datetime.now().isoformat(),
         "query": query,
@@ -58,10 +61,10 @@ def save_session(title: str, query: str, state: dict) -> dict:
     _save_db(db)
     return session
 
-def delete_session(session_id: str) -> bool:
+def delete_session(session_id: str, user_id: str) -> bool:
     db = _load_db()
     initial_len = len(db)
-    db = [s for s in db if s["id"] != session_id]
+    db = [s for s in db if not (s["id"] == session_id and s.get("user_id") == user_id)]
     if len(db) < initial_len:
         _save_db(db)
         return True

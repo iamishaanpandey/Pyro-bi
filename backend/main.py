@@ -5,7 +5,7 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, Header
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pathlib import Path
@@ -161,12 +161,23 @@ async def query(req: QueryRequest):
 
 
 @app.post("/upload-csv")
-async def upload_csv(file: UploadFile = File(...)):
+async def upload_csv(file: UploadFile = File(...), x_user_id: str | None = Header(None)):
+    if not x_user_id:
+        raise HTTPException(status_code=401, detail="Missing X-User-ID header")
     if not file.filename.endswith(".csv"):
         raise HTTPException(status_code=400, detail="Only CSV files are supported.")
-    contents = await file.read()
+    
+    # Security: Enforce a strict 15MB limit to protect Render Free Tier RAM
+    MAX_FILE_SIZE = 15 * 1024 * 1024 # 15 MB
+    contents = bytearray()
+    while chunk := await file.read(1024 * 1024):  # read 1MB chunks
+        contents.extend(chunk)
+        if len(contents) > MAX_FILE_SIZE:
+            raise HTTPException(status_code=413, detail="File too large. Maximum size is 15MB.")
+            
+    contents = bytes(contents)
     try:
-        meta = process_upload(contents, file.filename)
+        meta = process_upload(contents, file.filename, x_user_id)
 
         # Compute normalization suggestions and preview immediately
         # so the frontend gets everything in one round-trip (avoids race condition
@@ -226,26 +237,34 @@ async def get_columns(table_name: str):
 
 
 @app.get("/sessions")
-async def get_all_sessions():
-    return {"sessions": list_sessions()}
+async def get_all_sessions(x_user_id: str | None = Header(None)):
+    if not x_user_id:
+        return {"sessions": []}
+    return {"sessions": list_sessions(x_user_id)}
 
 
 @app.get("/sessions/{session_id}")
-async def fetch_session(session_id: str):
-    s = get_session(session_id)
+async def fetch_session(session_id: str, x_user_id: str | None = Header(None)):
+    if not x_user_id:
+        raise HTTPException(status_code=401, detail="Missing X-User-ID header")
+    s = get_session(session_id, x_user_id)
     if not s:
         raise HTTPException(status_code=404, detail="Session not found.")
     return s
 
 
 @app.post("/sessions")
-async def create_session(req: SaveSessionRequest):
-    return save_session(req.title, req.query, req.state)
+async def create_session(req: SaveSessionRequest, x_user_id: str | None = Header(None)):
+    if not x_user_id:
+        raise HTTPException(status_code=401, detail="Missing X-User-ID header")
+    return save_session(req.title, req.query, req.state, x_user_id)
 
 
 @app.delete("/sessions/{session_id}")
-async def remove_session(session_id: str):
-    success = delete_session(session_id)
+async def remove_session(session_id: str, x_user_id: str | None = Header(None)):
+    if not x_user_id:
+        raise HTTPException(status_code=401, detail="Missing X-User-ID header")
+    success = delete_session(session_id, x_user_id)
     if not success:
         raise HTTPException(status_code=404, detail="Session not found.")
     return {"success": True}

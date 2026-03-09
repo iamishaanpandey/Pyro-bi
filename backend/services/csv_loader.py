@@ -11,16 +11,17 @@ UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
-def process_upload(file_bytes: bytes, original_filename: str) -> dict:
+def process_upload(file_bytes: bytes, original_filename: str, user_id: str) -> dict:
     """
     Save uploaded CSV to disk and load it into DuckDB.
-    Returns table metadata.
+    Namespaced by User ID to prevent global state collision.
     """
-    # Build a safe table name from the filename
     base = os.path.splitext(original_filename)[0]
-    table_name = "".join(c if c.isalnum() or c == "_" else "_" for c in base).lower()
-    if not table_name[0].isalpha():
-        table_name = "tbl_" + table_name
+    safe_base = "".join(c if c.isalnum() or c == "_" else "_" for c in base).lower()
+    safe_uuid = user_id.replace("-", "_").lower()
+    
+    # Prefix the table with user uuid to isolate it
+    table_name = f"tbl_{safe_uuid}_{safe_base}"
 
     # Write to a temp path first, then persist
     dest_path = os.path.join(UPLOAD_DIR, f"{table_name}.csv")

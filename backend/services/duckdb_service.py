@@ -148,7 +148,7 @@ def compute_data_quality(table_name: str) -> dict:
     }
 
 
-def load_csv_as_table(table_name: str, file_path: str) -> dict:
+def load_csv_as_table(table_name: str, file_path: str, user_id: str) -> dict:
     """
     Load a CSV file into a new DuckDB table with automatic data sanitization.
     Returns metadata + data quality report.
@@ -160,8 +160,8 @@ def load_csv_as_table(table_name: str, file_path: str) -> dict:
         df = pd.read_csv(file_path, low_memory=False)
         df = _sanitize_dataframe(df)
 
-        # Clear previous tables to emulate fresh memory state for this new upload
-        for t in get_table_names():
+        # Clear only this user's previous tables to emulate fresh memory state
+        for t in get_table_names(user_id):
             conn.execute(f'DROP TABLE IF EXISTS "{t}"')
         
         # Register the sanitized DataFrame directly into DuckDB
@@ -182,10 +182,17 @@ def load_csv_as_table(table_name: str, file_path: str) -> dict:
     return meta
 
 
-def get_table_names() -> list[str]:
+def get_table_names(user_id: str = None) -> list[str]:
     conn = get_connection()
     rows = conn.execute("SHOW TABLES").fetchall()
-    return [r[0] for r in rows]
+    tables = [r[0] for r in rows]
+    
+    if user_id:
+        safe_uuid = user_id.replace("-", "_").lower()
+        prefix = f"tbl_{safe_uuid}_"
+        tables = [t for t in tables if t.startswith(prefix)]
+        
+    return tables
 
 
 def get_table_info(table_name: str) -> dict:
