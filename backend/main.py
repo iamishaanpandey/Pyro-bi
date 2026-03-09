@@ -71,14 +71,14 @@ async def get_schema():
 
 
 @app.get("/preview")
-async def preview_data(limit: int = 50):
+async def preview_data(limit: int = 50, x_user_id: str | None = Header(None)):
     """
     Returns the first N rows of the uploaded table directly from DuckDB.
     NO LLM calls — near-instant response for data preview.
     """
     try:
         from services.duckdb_service import execute_query, get_table_names
-        tables = get_table_names()
+        tables = get_table_names(x_user_id)
         if not tables:
             return {"data": [], "table": None, "message": "No table loaded yet."}
         table = tables[0]
@@ -90,17 +90,14 @@ async def preview_data(limit: int = 50):
 
 
 @app.get("/normalization-suggestions")
-async def normalization_suggestions():
+async def normalization_suggestions(x_user_id: str | None = Header(None)):
     """
     Returns two-tier fuzzy-match suggestions for entity deduplication.
-    auto   (score >= 93): safe to merge silently
-    review (80-92): shown to user for confirmation
-    Zero LLM calls.
     """
     try:
         from services.duckdb_service import get_table_names
         from services.fuzzy_normalizer import detect_suggestions
-        tables = get_table_names()
+        tables = get_table_names(x_user_id)
         if not tables:
             return {"auto": [], "review": [], "table": None}
         return detect_suggestions(tables[0])
@@ -112,15 +109,14 @@ class NormalizationRequest(BaseModel):
     mappings: list[dict]   # [{ "column": str, "from": str, "to": str }]
 
 @app.post("/apply-normalization")
-async def apply_normalization(req: NormalizationRequest):
+async def apply_normalization(req: NormalizationRequest, x_user_id: str | None = Header(None)):
     """
     Applies approved entity mappings to the DuckDB table via UPDATE.
-    Also auto-applies any auto-tier suggestions at the same time.
     """
     try:
         from services.duckdb_service import get_table_names
         from services.fuzzy_normalizer import apply_normalization as _apply
-        tables = get_table_names()
+        tables = get_table_names(x_user_id)
         if not tables:
             raise HTTPException(status_code=400, detail="No table loaded.")
         result = _apply(tables[0], req.mappings)
@@ -132,11 +128,11 @@ async def apply_normalization(req: NormalizationRequest):
 
 
 @app.post("/query")
-async def query(req: QueryRequest):
+async def query(req: QueryRequest, x_user_id: str | None = Header(None)):
     if not req.query.strip():
         raise HTTPException(status_code=400, detail="Query cannot be empty.")
     try:
-        result = run_pipeline(req.query.strip(), req.session_id)
+        result = run_pipeline(req.query.strip(), req.session_id, x_user_id)
         return result
     except Exception as ex:
         error_msg = str(ex)

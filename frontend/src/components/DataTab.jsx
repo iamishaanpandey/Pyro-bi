@@ -287,7 +287,11 @@ export default function DataTab() {
       }}>
         <div>
           <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 24, fontWeight: 800, marginBottom: 12 }}>
-            Dataset: <span style={{ color: 'var(--bauhaus-red)' }}>{tableMeta.tableName}</span>
+            Dataset: <span style={{ color: 'var(--bauhaus-red)' }}>{
+              tableMeta.tableName 
+                ? (tableMeta.tableName.match(/^tbl_[a-f0-9_]+_(.+)$/i) ? tableMeta.tableName.match(/^tbl_[a-f0-9_]+_(.+)$/i)[1].replace(/_/g, ' ') : tableMeta.tableName)
+                : ''
+            }</span>
           </h2>
           <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
             <span style={{ padding: '4px 12px', background: 'var(--bauhaus-yellow)', border: '2px solid var(--bauhaus-black)', boxShadow: '2px 2px 0 var(--bauhaus-black)', fontSize: 12, fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif" }}>

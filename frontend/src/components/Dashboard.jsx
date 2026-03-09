@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react'
+import axios from 'axios'
 import useDashboardStore from '../store/dashboardStore'
 import DynamicChart from './DynamicChart'
 import KpiCard from './KpiCard'

@@ -14,7 +14,7 @@ from agents.insight_summarizer import summarize_insights
 from services.redis_service import get_cached, set_cached
 
 
-def run_pipeline(user_query: str, session_id: str = "") -> dict:
+def run_pipeline(user_query: str, session_id: str = "", user_id: str = "") -> dict:
     """
     Runs all 6 agents sequentially and returns the full response dict.
     """
@@ -42,7 +42,7 @@ def run_pipeline(user_query: str, session_id: str = "") -> dict:
 
     # ── Agent 2: Schema Translator ────────────────────────────────────────────
     print("[Pipeline] Agent 2: Schema Translator")
-    schema_context = build_schema_context()
+    schema_context = build_schema_context(user_id)
 
     # ── Agent 3: Query Executor ───────────────────────────────────────────────
     print("[Pipeline] Agent 3: Query Executor")

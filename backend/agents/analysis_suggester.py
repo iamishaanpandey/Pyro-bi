@@ -14,11 +14,11 @@ SYSTEM = (
     "Return ONLY raw JSON, no markdown."
 )
 
-def generate_suggestions() -> dict:
+def generate_suggestions(user_id: str = None) -> dict:
     """
     Returns a JSON object with grouped analysis suggestion categories.
     """
-    schema_context = build_schema_context()
+    schema_context = build_schema_context(user_id)
     
     user = f"""{schema_context}
 
