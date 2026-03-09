@@ -26,7 +26,8 @@ export default function QueryInput() {
         .replace(/\b\w/g, l => l.toUpperCase())
     }
 
-    const tName = humanize(tableMeta.tableName)
+    const cleanTableName = (str) => str.replace(/^tbl_[a-f0-9]{8}_[a-f0-9]{4}_[a-f0-9]{4}_[a-f0-9]{4}_[a-f0-9]{12}_/i, '')
+    const tName = humanize(cleanTableName(tableMeta.tableName))
     const c0 = humanize(cols[0])
     const c1 = cols[1] ? humanize(cols[1]) : 'Date'
     const cLast = humanize(cols[cols.length-1])

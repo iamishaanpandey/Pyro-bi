@@ -19,8 +19,9 @@ def build_schema_context(user_id: str = None) -> str:
 
     for table in tables:
         info = get_table_info(table)
-        # Generate a clean readable alias by stripping tbl_uuid_ 
-        clean_name = table.split("_", 2)[-1].replace("_", " ") if table.startswith("tbl_") else table
+        import re
+        # Generate a clean readable alias by stripping the exact 36-char tbl_uuid_ format
+        clean_name = re.sub(r"^tbl_[a-f0-9]{8}_[a-f0-9]{4}_[a-f0-9]{4}_[a-f0-9]{4}_[a-f0-9]{12}_", "", table).replace("_", " ")
         
         lines.append(f"TABLE: {info['table_name']} (Readable Alias: {clean_name})")
         lines.append(f"  Rows: {info['row_count']}")
